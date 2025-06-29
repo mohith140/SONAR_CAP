@@ -5,6 +5,11 @@
   "repository": "<Add your repository here>",
   "license": "UNLICENSED",
   "private": true,
+  "jest": {
+    "coverageDirectory": "./coverage",
+    "collectCoverage": true,
+    "testResultsProcessor": "jest-sonar-reporter"
+  },
   "dependencies": {
     "@sap/cds": "^8",
     "@sap/hana-client": "^2.25.22",
@@ -14,6 +19,8 @@
     "@cap-js/cds-types": "^0.10.0",
     "@cap-js/sqlite": "^1",
     "@sap/cds-dk": "^8",
+    "jest": "^30.0.3",
+    "jest-sonar-reporter": "^2.0.0",
     "sonar-scanner": "^3.1.0"
   },
   "scripts": {
