@@ -1,0 +1,35 @@
+{
+  "name": "sonarcap",
+  "version": "1.0.0",
+  "description": "A simple CAP project.",
+  "repository": "<Add your repository here>",
+  "license": "UNLICENSED",
+  "private": true,
+  "dependencies": {
+    "@sap/cds": "^8",
+    "@sap/hana-client": "^2.25.22",
+    "express": "^4"
+  },
+  "devDependencies": {
+    "@cap-js/cds-types": "^0.10.0",
+    "@cap-js/sqlite": "^1",
+    "@sap/cds-dk": "^8",
+    "sonar-scanner": "^3.1.0"
+  },
+  "scripts": {
+    "start": "cds-serve"
+  },
+  "cds": {
+    "build": {
+      "target": "."
+    },
+    "hana": {
+      "deploy-format": "hdbtable"
+    },
+    "requires": {
+      "db": {
+        "kind": "hana"
+      }
+    }
+  }
+}
