@@ -1,6 +1,6 @@
 namespace DATA;
 
-entity Bookstore {
+entity Bookstore1 {
   key ID          : UUID;
       Title       : String(120);
       Author      : String(80);
