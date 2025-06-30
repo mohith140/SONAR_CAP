@@ -31,7 +31,7 @@ jobs:
         uses: SonarSource/sonarcloud-github-action@v2
         with:
           args: >
-            -Dsonar.organization=mohithbunny
-            -Dsonar.projectKey=mohithbunny_SONAR_CAP
+            -Dsonar.organization=mohith140
+            -Dsonar.projectKey=mohith140_SONAR_CAP
         env:
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
