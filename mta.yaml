@@ -5,7 +5,7 @@ version: 1.0.0
 modules:
 - name: sonarcap-srv
   type: nodejs
-  path: gen/srv
+  path: .
   provides:
   - name: srv-api
     properties:
