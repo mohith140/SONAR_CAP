@@ -35,3 +35,12 @@ jobs:
             -Dsonar.projectKey=mohith140_SONAR_CAP
         env:
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
+
+      - name: Install MTA Build Tool (mbt)
+        run: |
+          wget https://github.com/SAP/cloud-mta-build-tool/releases/latest/download/cloud-mta-build-tool_1.2.27_linux_amd64.tar.gz
+          tar -xzf cloud-mta-build-tool_1.2.27_linux_amd64.tar.gz
+          sudo mv mbt /usr/local/bin/
+
+      - name: Run mbt build
+        run: mbt build
