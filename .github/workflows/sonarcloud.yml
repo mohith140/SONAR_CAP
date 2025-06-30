@@ -43,3 +43,8 @@ jobs:
             -Dsonar.projectKey=mohith140_SONAR_CAP
         env:
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
+
+      - name: Wait for Quality Gate result
+        uses: sonarsource/sonarqube-quality-gate-action@master
+        with:
+          sonarToken: ${{ secrets.SONAR_TOKEN }}
