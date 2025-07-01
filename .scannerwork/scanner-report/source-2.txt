@@ -26,12 +26,12 @@ module.exports = async function (srv) {
   });
   this.on('getBookTitle', async (req) => {
     const book = await cds.run(`SELECT TOP 1000
-    "ID",
-    "TITLE",
-    "AUTHOR",
-    "GENRE",
-    "PRICE",
-    "INSTOCK"
+	"ID",
+	"TITLE",
+	"AUTHOR",
+	"GENRE",
+	"PRICE",
+	"INSTOCK"
 FROM "SONARDEMO"."DATA_BOOKSTORE"`)
     if (!book) return req.error(404, 'Book not found');
     return book; // ✅ Capital "T" must match CDS definition
@@ -78,13 +78,3 @@ async function simulateExternalFailure(data) {
     setTimeout(() => reject(new Error('Simulated service failure')), 100);
   });
 }
-// test/service.test.js
-
-// ✅ Make sure the service file is executed
-require('./srv/service');
-
-describe('Dummy handler test', () => {
-  it('should pass this placeholder test', () => {
-    expect(true).toBe(true);
-  });
-});

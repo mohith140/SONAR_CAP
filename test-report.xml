@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <testExecutions version="1">
   <file path="/home/user/projects/sonarcap/test.js">
+    <testCase name="Dummy handler test should pass this placeholder test" duration="1"/>
   </file>
 </testExecutions>

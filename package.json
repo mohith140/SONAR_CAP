@@ -8,7 +8,8 @@
   "jest": {
     "coverageDirectory": "./coverage",
     "collectCoverage": true,
-    "testResultsProcessor": "jest-sonar-reporter"
+    "testResultsProcessor": "jest-sonar-reporter",
+    "collectCoverageFrom":["srv/**/*.js"]
   },
   "dependencies": {
     "@sap/cds": "^8",
@@ -25,7 +26,7 @@
   },
   "scripts": {
     "start": "cds-serve",
-    "test": "jest"
+    "test": "jest --coverage"
   },
   "cds": {
     "build": {
