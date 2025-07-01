@@ -25,9 +25,14 @@
   },
   "scripts": {
     "start": "cds-serve",
-    "test": "echo \"Error: no test specified\" && exit 1"
-
+    "test": "jest --coverage"
   },
+  
+  "jest": {
+  "coverageDirectory": "./coverage",
+  "collectCoverage": true,
+  "testResultsProcessor": "jest-sonar-reporter"
+},
   "cds": {
     "build": {
       "target": "."

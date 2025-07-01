@@ -1,7 +1,7 @@
 organization=mohith140
 projectKey=mohith140_SONAR_CAP
 serverUrl=https://sonarcloud.io
-serverVersion=8.0.0.65084
+serverVersion=8.0.0.65096
 dashboardUrl=https://sonarcloud.io/dashboard?id=mohith140_SONAR_CAP
-ceTaskId=AZfA0QwtwtVdCPaBp4YI
-ceTaskUrl=https://sonarcloud.io/api/ce/task?id=AZfA0QwtwtVdCPaBp4YI
+ceTaskId=AZfFGOJo5M1gVaEGvHkv
+ceTaskUrl=https://sonarcloud.io/api/ce/task?id=AZfFGOJo5M1gVaEGvHkv

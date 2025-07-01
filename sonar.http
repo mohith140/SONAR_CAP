@@ -1,0 +1,12 @@
+### Create a new Bookstore entry
+POST http://localhost:4004/odata/v4/catalog/Books
+Content-Type: application/json
+
+{
+  "ID": "123e4567-e89b-12d3-a456-426614174007",
+  "Title": "The Pragmatic Programmer",
+  "Author": "Andy Hunt & Dave Thomas",
+  "Genre": "Programming",
+  "Price": 42.99,
+  "InStock": true
+}
