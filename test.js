@@ -1,4 +1,5 @@
 // This is a dummy credential - SonarCloud should flag it as a security hotspot
+const service = require('../srv/service'); // this executes the handler code
 
 
 console.log(eval('5/0'))
@@ -49,3 +50,4 @@ try {
 
 // 10. Eval usage (security hotspot)
 eval("console.log('This is unsafe')");
+
