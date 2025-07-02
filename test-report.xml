@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <testExecutions version="1">
   <file path="/home/user/projects/sonarcap/test/service.test.js">
-    <testCase name="CAP Custom Handlers getBookTitle1: should return mocked books" duration="130">
+    <testCase name="CAP Custom Handlers getBookTitle1: should return mocked books" duration="124">
       <failure message="TypeError: Cannot read properties of undefined (reading &apos;1&apos;)"><![CDATA[TypeError: Cannot read properties of undefined (reading '1')
     at Object.<anonymous> (/home/user/projects/sonarcap/test/service.test.js:30:74)
     at Promise.finally.completed (/home/user/projects/sonarcap/node_modules/jest-circus/build/jestAdapterInit.js:1559:28)
@@ -19,7 +19,12 @@
     at runTest (/home/user/projects/sonarcap/node_modules/jest-runner/build/index.js:340:7)]]></failure>
     </testCase>
     <testCase name="CAP Custom Handlers getBookTitle: should return SQL query result" duration="1"/>
-    <testCase name="CAP Custom Handlers getBookByTitleSqlInjection: should return result" duration="11"/>
-    <testCase name="CAP Custom Handlers readFileInsecure: should return file content" duration="7"/>
+    <testCase name="CAP Custom Handlers getBookByTitleSqlInjection: should return result" duration="11">
+      <failure message="TypeError: Cannot read properties of null (reading &apos;doSomething&apos;)"><![CDATA[TypeError: Cannot read properties of null (reading 'doSomething')
+    at doSomething (/home/user/projects/sonarcap/srv/service.js:51:13)
+    at processTicksAndRejections (node:internal/process/task_queues:105:5)
+    at Object.<anonymous> (/home/user/projects/sonarcap/test/service.test.js:53:20)]]></failure>
+    </testCase>
+    <testCase name="CAP Custom Handlers readFileInsecure: should return file content" duration="12"/>
   </file>
 </testExecutions>
