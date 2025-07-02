@@ -1,2 +1,2 @@
 ™
-The property 'sonar.login' is deprecated and will be removed in the future. Please use the 'sonar.token' property instead when passing a token.×®Êü2
+The property 'sonar.login' is deprecated and will be removed in the future. Please use the 'sonar.token' property instead when passing a token.¤ÀÒÊü2

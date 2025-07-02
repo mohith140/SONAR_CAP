@@ -4,5 +4,24 @@
     <testCase name="Dummy handler test should pass this placeholder test" duration="1"/>
   </file>
   <file path="/home/user/projects/sonarcap/test/service.test.js">
+    <testCase name="CAP Custom Handlers getBookTitle1: should return mocked books" duration="1">
+      <failure message="TypeError: Cannot read properties of undefined (reading &apos;1&apos;)"><![CDATA[TypeError: Cannot read properties of undefined (reading '1')
+    at Object.<anonymous> (/home/user/projects/sonarcap/test/service.test.js:30:74)
+    at Promise.finally.completed (/home/user/projects/sonarcap/node_modules/jest-circus/build/jestAdapterInit.js:1559:28)
+    at new Promise (<anonymous>)
+    at callAsyncCircusFn (/home/user/projects/sonarcap/node_modules/jest-circus/build/jestAdapterInit.js:1499:10)
+    at _callCircusTest (/home/user/projects/sonarcap/node_modules/jest-circus/build/jestAdapterInit.js:1009:40)
+    at _runTest (/home/user/projects/sonarcap/node_modules/jest-circus/build/jestAdapterInit.js:949:3)
+    at _runTestsForDescribeBlock (/home/user/projects/sonarcap/node_modules/jest-circus/build/jestAdapterInit.js:839:13)
+    at _runTestsForDescribeBlock (/home/user/projects/sonarcap/node_modules/jest-circus/build/jestAdapterInit.js:829:11)
+    at run (/home/user/projects/sonarcap/node_modules/jest-circus/build/jestAdapterInit.js:757:3)
+    at runAndTransformResultsToJestFormat (/home/user/projects/sonarcap/node_modules/jest-circus/build/jestAdapterInit.js:1920:21)
+    at jestAdapter (/home/user/projects/sonarcap/node_modules/jest-circus/build/runner.js:101:19)
+    at runTestInternal (/home/user/projects/sonarcap/node_modules/jest-runner/build/index.js:272:16)
+    at runTest (/home/user/projects/sonarcap/node_modules/jest-runner/build/index.js:340:7)]]></failure>
+    </testCase>
+    <testCase name="CAP Custom Handlers getBookTitle: should return SQL query result" duration="1"/>
+    <testCase name="CAP Custom Handlers getBookByTitleSqlInjection: should return result" duration="1"/>
+    <testCase name="CAP Custom Handlers readFileInsecure: should return file content" duration="6"/>
   </file>
 </testExecutions>
