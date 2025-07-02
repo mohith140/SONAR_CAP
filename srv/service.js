@@ -33,7 +33,7 @@ module.exports = async function (srv) {
     return await cds.run(query);
 //     const book = await cds.run(`SELECT TOP 1000
 // 	"ID",
-// 	"TITLE",
+// 	"TITLE", 
 // 	"AUTHOR",
 // 	"GENRE",
 // 	"PRICE",
