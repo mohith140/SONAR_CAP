@@ -9,7 +9,9 @@
     "coverageDirectory": "./coverage",
     "collectCoverage": true,
     "testResultsProcessor": "jest-sonar-reporter",
-    "collectCoverageFrom":["srv/**/*.js"]
+    "collectCoverageFrom": [
+      "srv/**/*.js"
+    ]
   },
   "dependencies": {
     "@sap/cds": "^8",
@@ -22,6 +24,7 @@
     "@sap/cds-dk": "^8",
     "jest": "^30.0.3",
     "jest-sonar-reporter": "^2.0.0",
+    "mock-fs": "^5.5.0",
     "sonar-scanner": "^3.1.0"
   },
   "scripts": {

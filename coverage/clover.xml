@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<coverage generated="1751391828650" clover="3.2.0">
-  <project timestamp="1751391828650" name="All files">
+<coverage generated="1751428685334" clover="3.2.0">
+  <project timestamp="1751428685334" name="All files">
     <metrics statements="35" coveredstatements="4" conditionals="2" coveredconditionals="0" methods="9" coveredmethods="0" elements="46" coveredelements="4" complexity="0" loc="35" ncloc="35" packages="1" files="1" classes="1"/>
     <file name="service.js" path="/home/user/projects/sonarcap/srv/service.js">
       <metrics statements="35" coveredstatements="4" conditionals="2" coveredconditionals="0" methods="9" coveredmethods="0"/>
