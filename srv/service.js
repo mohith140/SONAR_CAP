@@ -1,7 +1,9 @@
 const cds = require('@sap/cds');
 const fs = require('fs');
 const path = require('path');
+const https= require('https')
 module.exports = async function (srv) {
+
   // console.log(5/0)
   // const { Bookstore } = cds.entities('DATA');
     // console.log(Bookstore)
@@ -26,30 +28,44 @@ module.exports = async function (srv) {
   //   }
   // });
   srv.on('getBookTitle', async (req) => {
-    const book = await cds.run(`SELECT TOP 1000
-	"ID",
-	"TITLE",
-	"AUTHOR",
-	"GENRE",
-	"PRICE",
-	"INSTOCK"
-FROM "SONARDEMO"."DATA_BOOKSTORE"`)
+    const title = "";
+    const query = `SELECT * FROM "SONARDEMO"."DATA_BOOKSTORE" WHERE "TITLE" = '' OR 1=1 --'`;
+    return await cds.run(query);
+//     const book = await cds.run(`SELECT TOP 1000
+// 	"ID",
+// 	"TITLE",
+// 	"AUTHOR",
+// 	"GENRE",
+// 	"PRICE",
+// 	"INSTOCK"
+// FROM "SONARDEMO"."DATA_BOOKSTORE"`)
+// const risky = null;
+//       risky.doSomething();
     if (!book) return req.error(404, 'Book not found');
     return book; // ✅ Capital "T" must match CDS definition
 
   });
     srv.on('getBookByTitleSqlInjection', async (req) => {
-      console.log(5/0)
+      const password = "sk_live_123456";
+      console.log(password)
+      console.log(null)
     
 
       const title = req.data.title;
-  
-      // ❌ Dangerous: injecting user input directly into SQL
+       
+    
       const query = `SELECT * FROM "SONARDEMO"."DATA_BOOKSTORE" WHERE title = '${title}'`;
       const result = await cds.run(query);
-      const risky = null;
-      risky.doSomething(); // 🐛 Will throw TypeError — Sonar flags this
-      return result;
+      let sum = 0;
+      for (let i = 0; i < 1_000_000; i++) {
+        sum += i;
+      }
+      // return sum;
+      https.get('https://api.github.com/', (res) => {
+        // Missing error handler
+      });
+  return result;
+    
     });
 
 
@@ -70,6 +86,23 @@ srv.on('readFileInsecure', async (req) => {
     console.error('💥 Error in readFileInsecure:', err);
     req.error(500, 'File Read Failed');
   }
+});
+    srv.on('createUser', async (req) => {
+  const { email } = req.data;
+  return email
+});
+
+srv.on('saveBook', async (req) => {
+  // cds.run(INSERT.into(Books).entries({
+  //   ID: '123e4567-e89b-12d3-a456-426614174900',
+  //   Title: 'The Static Way',
+  //   Author: 'John Doe',
+  //   Genre: 'Fiction',
+  //   Price: 19.99,
+  //   InStock: true
+  // })); // ❌ No await — this may cause a bug in production
+
+  return "Book saved!";
 });
 
   };

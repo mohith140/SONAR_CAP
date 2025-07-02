@@ -5,14 +5,7 @@
   "repository": "<Add your repository here>",
   "license": "UNLICENSED",
   "private": true,
-  "jest": {
-    "coverageDirectory": "./coverage",
-    "collectCoverage": true,
-    "testResultsProcessor": "jest-sonar-reporter",
-    "collectCoverageFrom": [
-      "srv/**/*.js"
-    ]
-  },
+
   "dependencies": {
     "@sap/cds": "^8",
     "@sap/hana-client": "^2.25.22",
