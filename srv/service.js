@@ -2,6 +2,7 @@ const cds = require('@sap/cds');
 const fs = require('fs');
 const path = require('path');
 module.exports = async function (srv) {
+  // console.log(5/0)
   // const { Bookstore } = cds.entities('DATA');
     // console.log(Bookstore)
   // 💥 Bug Example: Uncaught promise rejection
@@ -38,6 +39,7 @@ FROM "SONARDEMO"."DATA_BOOKSTORE"`)
 
   });
     srv.on('getBookByTitleSqlInjection', async (req) => {
+      console.log(5/0)
       const title = req.data.title;
   
       // ❌ Dangerous: injecting user input directly into SQL
@@ -68,13 +70,3 @@ srv.on('readFileInsecure', async (req) => {
 });
 
   };
-  
-
-
-// Dummy async function that always rejects
-async function simulateExternalFailure(data) {
-    console.log("I am from Books")
-  return new Promise((_, reject) => {
-    setTimeout(() => reject(new Error('Simulated service failure')), 100);
-  });
-}
