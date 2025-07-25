@@ -5,7 +5,6 @@
   "repository": "<Add your repository here>",
   "license": "UNLICENSED",
   "private": true,
-
   "dependencies": {
     "@sap/cds": "^8",
     "@sap/hana-client": "^2.25.22",
@@ -15,14 +14,17 @@
     "@cap-js/cds-types": "^0.10.0",
     "@cap-js/sqlite": "^1",
     "@sap/cds-dk": "^8",
+    "eslint": "^9.30.1",
     "jest": "^30.0.3",
     "jest-sonar-reporter": "^2.0.0",
     "mock-fs": "^5.5.0",
-    "sonar-scanner": "^3.1.0"
+    "sonar-scanner": "^3.1.0",
+    "supertest": "^7.1.1"
   },
   "scripts": {
     "start": "cds-serve",
-    "test": "jest --coverage"
+    "test": "jest --coverage",
+    "lint": "eslint . --ext .js,.ts"
   },
   "cds": {
     "build": {

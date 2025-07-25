@@ -6,5 +6,6 @@ service CatalogService {
   function getBookTitle1() returns String;
   function readFileInsecure() returns String;
   function getBookByTitleSqlInjection() returns String;//{ "title": "' OR 1=1 --" }
-
+  function weakHash() returns String;
 }
+

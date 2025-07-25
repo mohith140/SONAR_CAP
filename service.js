@@ -38,6 +38,9 @@ FROM "SONARDEMO"."DATA_BOOKSTORE"`)
 
   });
     srv.on('getBookByTitleSqlInjection', async (req) => {
+      // SONAR_CUSTOM: Triggering custom rule check
+System.out.println("This should use a logger");
+
       const title = req.data.title;
   
       // ❌ Dangerous: injecting user input directly into SQL
