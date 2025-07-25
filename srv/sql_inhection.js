@@ -4,11 +4,15 @@ const app = express();
 
 app.get('/user', (req, res) => {
   const username = req.query.username; // ❌ user input directly used
-//   const connection = mysql.createConnection({ /* connection config */ });
+  const connection = mysql.createConnection({ /* connection config */ });
 
   const query = `SELECT * FROM users WHERE username = '${username}'`; // 🔥 SQL Injection
   cds.run(query);
   connection.query(query, (err, results) => {})
+  connection.query(query, (err, results) => {
+      if (err) throw err;
+      res.send(results);
+    });
 //     if (err) throw err;
 //     res.send(results);
 //   });
