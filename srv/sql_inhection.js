@@ -7,7 +7,8 @@ app.get('/user', (req, res) => {
 //   const connection = mysql.createConnection({ /* connection config */ });
 
   const query = `SELECT * FROM users WHERE username = '${username}'`; // 🔥 SQL Injection
-//   connection.query(query, (err, results) => {
+  cds.run(query);
+  connection.query(query, (err, results) => {})
 //     if (err) throw err;
 //     res.send(results);
 //   });
@@ -39,6 +40,7 @@ function hashPassword(pw) {
 
 
 const _ = require('lodash');
+const { cds2edm } = require('@sap/cds/libx/odata/utils');
 
 let userInput = {
   "__proto__": {
