@@ -49,7 +49,18 @@ const vm = require('vm');
     return book; // ✅ Capital "T" must match CDS definition
 
   });
+  srv.on('getUserById', async (req) => {
+    const id = req.data.id; // 🚨 Unsafe
+    const db = await cds.connect.to('db');
+
+    // ⚠️ SQL injection vulnerability: directly injecting user input into query string
+    const query = `SELECT * FROM Users WHERE ID = '${id}'`;
+
+    const result = await db.run(query);
+    return result;
+  });
     srv.on('getBookByTitleSqlInjection', async (req) => {
+      
       const password = "sk_live_123456";
       console.log(password)
       console.log(null)
