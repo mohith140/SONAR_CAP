@@ -154,7 +154,7 @@ srv.on('badRegex', async (req) => {
   const id = req.data.id; // ⚠️ user-controlled input
   const db = await cds.connect.to('db');
   const regex = new RegExp('(a+)+$');
-  return regex.test('aaaaaaaaaaaaaaaaaaaaaaaaaaaa!');
+  const t=regex.test('aaaaaaaaaaaaaaaaaaaaaaaaaaaa!');
   const query = `SELECT * FROM Users WHERE ID = '${id}'`; // 🚨 Unsafe
   return await db.run(query); 
 });
