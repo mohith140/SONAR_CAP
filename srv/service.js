@@ -180,6 +180,12 @@ srv.on('leakError', async () => {
 
 // 7. Disabling cert validation
 
+srv.on('getUserById', async (req) => {
+  const id = req.data.id; // ⚠️ user-controlled input
+  const db = await cds.connect.to('db');
+  const query = `SELECT * FROM Users WHERE ID = '${id}'`; // 🚨 Unsafe
+  return await db.run(query); // ✅ CodeQL will flag this
+});
 
 // 8. Insecure deserialization
 srv.on('unsafeVM', async () => {
