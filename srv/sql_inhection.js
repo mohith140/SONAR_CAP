@@ -2,7 +2,7 @@ const express = require('express');
 const mysql = require('mysql');
 const app = express();
 
-app.get('/user', (req, res) => {
+app.get('/user', async (req, res) => {
   const username = req.query.username; // ❌ user input directly used
   const connection = mysql.createConnection({ /* connection config */ });
   const API_KEY = "sk_live_123456789abcdef"; // ❗ GHAS will flag this
@@ -12,13 +12,13 @@ app.get('/user', (req, res) => {
   const db = await cds.connect.to('db');
   const query = `SELECT * FROM Users WHERE ID = '${id}'`; // ❗ SQL Injection
   return await db.run(query);
-  const query = `SELECT * FROM users WHERE username = '${username}'`; // 🔥 SQL Injection
-  cds.run(query);
-  connection.query(query, (err, results) => {})
-  connection.query(query, (err, results) => {
-      if (err) throw err;
-      res.send(results);
-    });
+  // const query = `SELECT * FROM users WHERE username = '${username}'`; // 🔥 SQL Injection
+  // cds.run(query);
+  // connection.query(query, (err, results) => {})
+  // connection.query(query, (err, results) => {
+  //     if (err) throw err;
+  //     res.send(results);
+  //   });
 //     if (err) throw err;
 //     res.send(results);
 //   });
