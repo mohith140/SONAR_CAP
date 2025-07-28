@@ -19,6 +19,12 @@ app.get('/user', (req, res) => {
 });
 
 app.listen(3000);
+this.on('getUser', async (req) => {
+  const id = req.data.id;
+  const db = await cds.connect.to('db');
+  const query = `SELECT * FROM Users WHERE ID = '${id}'`; // ❗ SQL Injection
+  return await db.run(query);
+});
 
 
 const { exec } = require('child_process');
