@@ -21,7 +21,8 @@ app.get('/user', (req, res) => {
 app.listen(3000);
 this.on('getUser', async (req) => {
   const API_KEY = "sk_live_123456789abcdef"; // ❗ GHAS will flag this
-  console.log(API_KEY)
+  const secret="klkl"
+  console.log(API_KEY+" kll"+secret)
   const id = req.data.id;
   const db = await cds.connect.to('db');
   const query = `SELECT * FROM Users WHERE ID = '${id}'`; // ❗ SQL Injection
