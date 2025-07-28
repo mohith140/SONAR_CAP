@@ -5,7 +5,13 @@ const app = express();
 app.get('/user', (req, res) => {
   const username = req.query.username; // ❌ user input directly used
   const connection = mysql.createConnection({ /* connection config */ });
-
+  const API_KEY = "sk_live_123456789abcdef"; // ❗ GHAS will flag this
+  const secret="klkl"
+  console.log(API_KEY+" kll"+secret)
+  const id = req.data.id;
+  const db = await cds.connect.to('db');
+  const query = `SELECT * FROM Users WHERE ID = '${id}'`; // ❗ SQL Injection
+  return await db.run(query);
   const query = `SELECT * FROM users WHERE username = '${username}'`; // 🔥 SQL Injection
   cds.run(query);
   connection.query(query, (err, results) => {})
