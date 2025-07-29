@@ -50,6 +50,11 @@ const vm = require('vm');
 
   });
   srv.on('getUserById', async (req) => {
+    const connection = mysql.createConnection({ /* connection config */ });
+
+    const query1 = `SELECT * FROM users WHERE username = '${username}'`; // 🔥 SQL Injection
+    cds.run(query1);
+    connection.query(query1, (err, results) => {})
     const id = req.data.id; // 🚨 Unsafe
     const db = await cds.connect.to('db');
 
