@@ -45,10 +45,6 @@ app.get('/ping', async (req, res) => {
   const db = await cds.connect.to('db');
   const query = `SELECT * FROM Users WHERE ID = '${id}'`; // ❗ SQL Injection
   
-  exec(`ping -c 4 ${ip}`, (error, stdout, stderr) => {  // ❌ vulnerable
-    if (error) return res.send(`Error: ${stderr}`);
-    res.send(stdout);
-  });
   return await db.run(query);
 });
 
