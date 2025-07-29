@@ -3,17 +3,17 @@ using DATA1 from '../db/orders';
 
 service MainService {
   entity Orders               as projection on DATA1.Orders;
-  entity Payments             as projection on DATA1.Payments;
-  entity Employees            as projection on DATA1.Employees;
-  entity Users                as projection on DATA1.Users;
-  entity CreditCards          as projection on DATA1.CreditCards;
-  entity Logs                 as projection on DATA1.Logs;
-  entity Secrets              as projection on DATA1.Secrets;
-  entity PublicSecrets        as projection on DATA1.PublicSecrets;
-  entity Sessions             as projection on DATA1.Sessions;
-  entity OrdersWithCustomers  as projection on DATA1.OrdersWithCustomers;
-  entity Customers            as projection on DATA1.Customers;
-  entity Feedback             as projection on DATA1.Feedback;
+ 
+  entity Employees as projection on DATA1.Employees;
+  entity CreditCards as projection on DATA1.CreditCards;
+  entity Secrets as projection on DATA1.Secrets;
+
+  @readonly
+  entity Logs as projection on DATA1.Logs;
+
+  entity Feedback as projection on DATA1.Feedback;
+
+  action exposeToken() returns String;
 }
 
 service CatalogService {
