@@ -1,4 +1,4 @@
-namespace my.app;
+namespace DATA1;
 entity Orders {
   key ID     : UUID;
       total  : Decimal(10,2);
