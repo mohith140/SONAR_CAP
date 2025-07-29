@@ -61,7 +61,11 @@ app.get('/proxy', (req, res) => {
 // 🧱 Issue 7: Incomplete Sanitization Using substring (CWE-020)
 app.get('/fetch-item', (req, res) => {
   const item = req.query.item;
-  const url = 'https://api.example.com/items/' + item.substring(0, 5); // Weak validation
+  // Validate item: only allow alphanumeric, underscore, and hyphen, max 5 chars
+  if (!item || !/^[a-zA-Z0-9_-]{1,5}$/.test(item)) {
+    return res.status(400).send('Invalid item parameter');
+  }
+  const url = 'https://api.example.com/items/' + item;
   axios.get(url)
     .then(r => res.send(r.data))
     .catch(e => res.status(500).send(e.message));
