@@ -4,7 +4,6 @@ packs:
   # Use these packs for JavaScript and TypeScript analysis
   javascript:
     - codeql/javascript-queries:codeql-suites/javascript-security-extended.qls
-    - advanced-security/javascript-sap-xsjs-queries:codeql-suites/javascript-security-extended.qls
     - advanced-security/javascript-sap-cap-queries:codeql-suites/javascript-security-extended.qls
     - advanced-security/javascript-sap-ui5-queries:codeql-suites/javascript-security-extended.qls
 
