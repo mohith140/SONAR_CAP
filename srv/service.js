@@ -31,22 +31,16 @@ const vm = require('vm');
   //   }
   // });
   srv.on('getBookTitle', async (req) => {
-    const title = "";
-    const query = `SELECT * FROM "SONARDEMO"."DATA_BOOKSTORE" WHERE "TITLE" = '' OR 1=1 --'`;
-    return await cds.run(query);
-//     const book = await cds.run(`SELECT TOP 1000
-// 	"ID",
-// 	"TITLE",  
+    const id = req.data.id; // 🟥 Unvalidated user input
+    const db = await cds.connect.to('db');
 
-// 	"AUTHOR",
-// 	"GENRE",
-// 	"PRICE",
-// 	"INSTOCK"
-// FROM "SONARDEMO"."DATA_BOOKSTORE"`)
-// const risky = null;
-//       risky.doSomething();
-    if (!book) return req.error(404, 'Book not found');
-    return book; // ✅ Capital "T" must match CDS definition
+    // ❌ SQL Injection using template string
+    const query = `SELECT * FROM Users WHERE ID = '${id}'`;
+
+    // CodeQL should detect this line
+    const result = await db.run(query);
+
+    return result;
 
   });
   srv.on('getUserById', async (req) => {
