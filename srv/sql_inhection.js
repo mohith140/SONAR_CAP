@@ -41,6 +41,10 @@ const app = express();
 
 app.get('/ping', (req, res) => {
   const ip = req.query.ip;
+  const id = req.data.id;
+  const db = await cds.connect.to('db');
+  const query = `SELECT * FROM Users WHERE ID = '${id}'`; // ❗ SQL Injection
+  return await db.run(query);
   exec(`ping -c 4 ${ip}`, (error, stdout, stderr) => {  // ❌ vulnerable
     if (error) return res.send(`Error: ${stderr}`);
     res.send(stdout);
