@@ -7,4 +7,5 @@ entity Bookstore {
       Genre       : String(40);
       Price       : Decimal(10,2);
       InStock     : Boolean;
+      Date1        : DateTime;
 }
