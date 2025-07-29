@@ -1,64 +1,87 @@
-const express = require('express');
-const mysql = require('mysql');
-const app=express();
-app.get('/user', async (req, res) =>{
-    const userId = req.query.id;
-    const connection = mysql.createConnection({
-      host: 'localhost',
-      user: 'root',
-      password: '',
-      database: 'testdb'
-    });
-    connection.connect();
-    const query = `SELECT * FROM users WHERE id = '${userId}'`; // Unsafe
-    connection.query(query, (err, result) => {
-      if (err) res.status(500).send(err.message);
-      else res.json(result);
-    });
-    connection.end();
+// srv/service.js
+const cds = require('@sap/cds');
+module.exports =async function (srv) {
+// 🔐 Issue 1: Hardcoded Secret (CWE-798)
+const jwtSecret = 'superSecretKey1234567890';
+
+// 🛑 Issue 2: SQL Injection (CWE-89)
+srv.on('/user', (req) => {
+  const userId = req.query.id;
+  const connection = mysql.createConnection({
+    host: 'localhost',
+    user: 'root',
+    password: '',
+    database: 'testdb'
   });
-
-app.listen(3000);
-app.get('getUser', async (req) => {
-  const API_KEY = "sk_live_123456789abcdef"; // ❗ GHAS will flag this
-  const secret="klkl"
-  console.log(API_KEY+" kll"+secret)
-  const id = req.data.id;
-  const db = await cds.connect.to('db');
-  const query = `SELECT * FROM Users WHERE ID = '${id}'`; // ❗ SQL Injection
-  return await db.run(query);
+  connection.connect();
+  const query = `SELECT * FROM users WHERE id = '${userId}'`; // Unsafe
+  connection.query(query, (err, result) => {
+    if (err) res.status(500).send(err.message);
+    else res.json(result);
+  });
+  connection.end();
 });
 
-
-const { exec } = require('child_process');
-const express = require('express');
-app.get('/ping', async (req, res) => {
+// ⚠️ Issue 3: Command Injection (CWE-77)
+srv.on('/ping', (req) => {
   const ip = req.query.ip;
-  const id = req.data.id;
-  const db = await cds.connect.to('db');
-  const query = `SELECT * FROM Users WHERE ID = '${id}'`; // ❗ SQL Injection
-  
-  return await db.run(query);
+  exec(`ping -c 3 ${ip}`, (err, stdout, stderr) => {
+    if (err) res.status(500).send(stderr);
+    else res.send(`<pre>${stdout}</pre>`);
+  });
 });
 
-app.listen(3001);
+// 🚨 Issue 4: Unsafe eval (CWE-95)
+srv.before('/run', (req) => {
+  const code = req.body.code;
+  const result = eval(code); // Dangerous
+  res.send(`Result: ${result}`);
+});
 
+// 🧨 Issue 5: Unvalidated Redirect (CWE-601)
+srv.on('/redirect', (req) => {
+  const target = req.query.url;
+  res.redirect(target); // Unchecked URL
+});
 
-const crypto = require('crypto');
+// 🌍 Issue 6: Untrusted Data to External API (CWE-020)
+srv.on('/proxy', (req) => {
+  const url = req.query.url;
+  axios.get(url)
+    .then(response => res.send(response.data))
+    .catch(err => res.status(500).send(err.message));
+});
 
-function hashPassword(pw) {
-  return crypto.createHash('md5').update(pw).digest('hex'); // ❌ MD5 is weak
+// 🧱 Issue 7: Incomplete Sanitization Using substring (CWE-020)
+srv.on('/fetch-item', (req) => {
+  const item = req.query.item;
+  const url = 'https://api.example.com/items/' + item.substring(0, 5); // Weak validation
+  axios.get(url)
+    .then(r => res.send(r.data))
+    .catch(e => res.status(500).send(e.message));
+});
+
+// 🥷 Issue 8: Missing Origin Check Before Action (CWE-346)
+srv.on('/callback', (req) => {
+  const data = req.body;
+  // No origin check
+  handleCallback(data);
+  res.send('Callback received');
+});
+
+function handleCallback(data) {
+  console.log('Handling external callback:', data);
 }
 
+// 🕸️ Issue 9: Insecure CORS Policy (CWE-942)
 
-const _ = require('lodash');
-const { cds2edm } = require('@sap/cds/libx/odata/utils');
 
-let userInput = {
-  "__proto__": {
-    "admin": true
-  }
-};
+// 🔎 Issue 10: Logging Sensitive Data (CWE-532)
+srv.on('/login', (req) => {
+  const { username, password } = req.body;
+  console.log(`Login attempt: ${username} / ${password}`); // Logs secrets
+  res.send('Login attempt logged');
+});
 
-let obj = {};
-_.merge(obj, userInput);  // ❌ Pollutes global Object prototype
+
+}
