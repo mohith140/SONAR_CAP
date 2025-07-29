@@ -32,13 +32,13 @@ const vm = require('vm');
   // });
   srv.on('getBookTitle', async (req) => {
     const id = req.data.id; // 🟥 Unvalidated user input
-    const db = await cds.connect.to('db');
+    const db =cds.connect.to('db');
 
     // ❌ SQL Injection using template string
-    const query = `SELECT * FROM Users WHERE ID = '${id}'`;
+    const q = `SELECT * FROM Customers WHERE ID = '${id}'`;
 
     // CodeQL should detect this line
-    const result = await db.run(query);
+    const result =db.run(q);
 
     return result;
 
