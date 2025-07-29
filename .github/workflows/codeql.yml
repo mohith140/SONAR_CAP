@@ -32,7 +32,7 @@ jobs:
         node-version: 18
 
     - name: Install CAP CLI
-      run: npm install -g @sap/cds cds-dk
+      run: npm install -g @sap/cds
 
     - name: Install dependencies
       run: npm ci
