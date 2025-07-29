@@ -31,7 +31,7 @@ jobs:
       uses: github/codeql-action/init@v3
       with:
         config-file: .github/workflows/codeql-config.yml
-        languages: javascript
+        languages: ${{ matrix.language }}
          
 
     - name: Perform CodeQL Analysis
