@@ -1,6 +1,6 @@
-const app = require('express');
+const express = require('express');
 const mysql = require('mysql');
-
+const app=express();
 app.get('/user', async (req, res) =>{
     const userId = req.query.id;
     const connection = mysql.createConnection({
@@ -32,8 +32,6 @@ app.get('getUser', async (req) => {
 
 const { exec } = require('child_process');
 const express = require('express');
-const app = express();
-
 app.get('/ping', async (req, res) => {
   const ip = req.query.ip;
   const id = req.data.id;
