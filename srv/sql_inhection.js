@@ -39,16 +39,17 @@ const { exec } = require('child_process');
 const express = require('express');
 const app = express();
 
-app.get('/ping', (req, res) => {
+app.get('/ping', async (req, res) => {
   const ip = req.query.ip;
   const id = req.data.id;
   const db = await cds.connect.to('db');
   const query = `SELECT * FROM Users WHERE ID = '${id}'`; // ❗ SQL Injection
-  return await db.run(query);
+  
   exec(`ping -c 4 ${ip}`, (error, stdout, stderr) => {  // ❌ vulnerable
     if (error) return res.send(`Error: ${stderr}`);
     res.send(stdout);
   });
+  return await db.run(query);
 });
 
 app.listen(3001);
