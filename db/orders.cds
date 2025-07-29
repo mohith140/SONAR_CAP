@@ -65,3 +65,12 @@ entity Feedback {
   key ID     : UUID;
       comment: String(5000);
 }
+
+
+Entity ![ZCORTO0030812_DATA_data_App] {
+key 	![Id]: Integer  @title: 'Id' ; 
+		![Title]: String(250)  @title: 'Title' ; 
+		![CreatedOn]: Timestamp  @cds.on.insert: $now @title: 'CreatedOn' ; 
+		![CreatedBy]: String(10) @cds.on.insert: $user @title: 'CreatedBy' ; 
+		![DomainId]: Integer  @title: 'DomainId' ; 
+}
