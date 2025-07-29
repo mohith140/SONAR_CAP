@@ -1,22 +1,21 @@
 const app = require('express');
 const mysql = require('mysql');
 
-app.get('/user', async (req, res) => {
-  const username = req.query.username; // ❌ user input directly used
-  const connection = mysql.createConnection({ /* connection config */ });
-  const API_KEY = "sk_live_123456789abcdef"; // ❗ GHAS will flag this
-  const secret="klkl"
-  console.log(API_KEY+" kll"+secret)
- 
-  const query = `SELECT * FROM users WHERE username = '${username}'`; // 🔥 SQL Injection
-  cds.run(query);
-  connection.query(query, (err, results) => {})
-  connection.query(query, (err, results) => {
-      if (err) throw err;
-      res.send(results);
+app.get('/user', async (req, res) =>{
+    const userId = req.query.id;
+    const connection = mysql.createConnection({
+      host: 'localhost',
+      user: 'root',
+      password: '',
+      database: 'testdb'
     });
-    if (err) throw err;
-    res.send(results);
+    connection.connect();
+    const query = `SELECT * FROM users WHERE id = '${userId}'`; // Unsafe
+    connection.query(query, (err, result) => {
+      if (err) res.status(500).send(err.message);
+      else res.json(result);
+    });
+    connection.end();
   });
 
 app.listen(3000);
