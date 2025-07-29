@@ -18,7 +18,6 @@ app.get('/user', async (req, res) => {
     if (err) throw err;
     res.send(results);
   });
-});
 
 app.listen(3000);
 this.on('getUser', async (req) => {
