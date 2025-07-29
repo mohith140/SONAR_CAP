@@ -1,0 +1,6 @@
+name: "CAP CodeQL Config"
+
+packs:
+  javascript:
+    - codeql/javascript-queries:codeql-suites/javascript-security-extended.qls
+    - advanced-security/javascript-sap-cap-queries
