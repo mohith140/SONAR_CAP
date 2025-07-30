@@ -8,8 +8,6 @@ default-*.json
 gen/
 node_modules/
 target/
-srv/sql_injection1.js
-srv/sql_inhection.js
 # Web IDE, App Studio
 .che/
 .gen/

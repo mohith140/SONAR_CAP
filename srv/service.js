@@ -7,6 +7,13 @@ const crypto = require('crypto');
 const child_process = require('child_process');
 const vm = require('vm');
 cds.User.default = cdsUser.Privileged;
+const express = require('express');
+const mysql = require('mysql');
+const axios = require('axios');
+const { exec } = require('child_process');
+const app = express();
+
+app.use(express.json()); 
   // console.log(5/0)
   // const { Bookstore } = cds.entities('DATA');
     // console.log(Bookstore)
