@@ -5,7 +5,7 @@ const axios = require('axios');
 const { exec } = require('child_process');
 const app = express();
 
-app.use(express.json());
+app.use(express.json()); 
 
 // 🔐 Issue 1: Hardcoded Secret (CWE-798)
 const jwtSecret = 'superSecretKey1234567890';
