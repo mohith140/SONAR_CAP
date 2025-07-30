@@ -1,6 +1,13 @@
 using DATA from '../db/tables'; // Adjust path as needed
 using DATA1 from '../db/orders';
-
+service Service2 @(path: 'service-2') {
+  /* Read access only to users with access level greater than 2. */
+  @(restrict: [ { grant: 'READ', to: '$user.level > 2' } ])
+  entity Service2Entity {
+    Attribute1 : String(100);
+    Attribute2 : String(100)
+  }
+}
 service MainService {
   entity Orders               as projection on DATA1.Orders;
  

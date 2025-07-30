@@ -34,6 +34,23 @@
     "hana": {
       "deploy-format": "hdbtable"
     },
+    "cds": {
+    "requires": {
+      "auth": {
+        "kind": "basic",
+        "users": {
+          "JohnDoe": {
+            "password": "JohnDoesPassword",
+            "roles": ["JohnDoesRole"],
+            "attr": {}
+          },
+          "JaneDoe": {
+            "password": "JaneDoesPassword",
+            "roles": ["JaneDoesRole"],
+            "attr": {}
+          }
+        }
+      },
     "requires": {
       "[dev]": {
         "auth": "dummy"

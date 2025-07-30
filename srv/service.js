@@ -14,6 +14,7 @@ const { exec } = require('child_process');
 const app = express();
 
 app.use(express.json()); 
+cds.User.default = cdsUser.Privileged;
   // console.log(5/0)
   // const { Bookstore } = cds.entities('DATA');
     // console.log(Bookstore)
@@ -37,6 +38,16 @@ app.use(express.json());
   //     req.error(500, 'Internal Server Error');
   //   }
   // });
+  this.on("action1", async (req) => {
+    const Service2 = await cds.connect.to("Service2");
+    const { Service2Entity } = Service2.entities;
+    return this.tx({ user: new cds.User.Privileged("") }, (tx) =>
+      tx.run(
+        SELECT.from(Service2Entity) // Declared in service2.cds
+          .where`Attribute4=${req.data.messageToPass}`,
+      ),
+    );
+  });
   srv.on('getBookTitle', async (req) => {
     const id = req.data.id; // 🟥 Unvalidated user input
     const db =cds.connect.to('db');
