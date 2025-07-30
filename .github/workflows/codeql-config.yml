@@ -7,7 +7,9 @@ packs:
     #- advanced-security/javascript-sap-xsjs-queries:codeql-suites/javascript-security-extended.qls
     - advanced-security/javascript-sap-cap-queries:codeql-suites/javascript-security-extended.qls
     - advanced-security/javascript-sap-ui5-queries:codeql-suites/javascript-security-extended.qls
-
+paths:
+  - srv
+  - db
 # old
 # name: "CAP CodeQL Config"
 
