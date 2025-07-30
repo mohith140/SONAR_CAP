@@ -34,7 +34,6 @@
     "hana": {
       "deploy-format": "hdbtable"
     },
-    "cds": {
     "requires": {
       "auth": {
         "kind": "basic",
@@ -51,7 +50,6 @@
           }
         }
       },
-    "requires": {
       "[dev]": {
         "auth": "dummy"
       },
