@@ -3,7 +3,7 @@ const fs = require('fs');
 const path = require('path');
 const https= require('https')
 module.exports =async function (srv) {
-  this.on("updateEntry",async (req)=> {
+  srv.on("updateEntry",async (req)=> {
     console.log(req+"  mlkl")
     await checkIsUserToriiAdmin(req.user.id);
     if (hasWhiteSpace(req.data.Title)) {
@@ -15,6 +15,76 @@ module.exports =async function (srv) {
 	let affected = await cds.tx(req).run (updateQuery);	
 	req.reply(affected);
  })
+ srv.on('getUserById', async (req) => {
+    const userId = req.data.userId;
+
+    // 2. SQL Injection (High)
+    const query = `SELECT * FROM Users WHERE ID = '${userId}'`;
+    return await cds.run(query);
+  });
+
+  srv.on('readFile', async (req) => {
+    const filename = req.data.filename;
+
+    // 3. Path Traversal (High)
+    const data = fs.readFileSync(`/srv/files/${filename}`, 'utf8');
+    return data;
+  });
+
+  srv.on('executeCommand', async (req) => {
+    const cmd = req.data.cmd;
+
+    // 4. Command Injection (Critical)
+    exec(cmd, (error, stdout) => {
+      if (error) {
+        console.error(`Error: ${error}`);
+      }
+    });
+    return "Command executed";
+  });
+
+  srv.on('redirectTo', async (req) => {
+    const url = req.data.url;
+
+    // 5. Open Redirect (High)
+    return `<a href="${url}">Click here</a>`;
+  });
+
+  srv.on('createToken', async () => {
+    // 6. Insecure random number generator (Medium)
+    const token = Math.random().toString(36).substring(7);
+    return token;
+  });
+
+  srv.on('logPassword', async (req) => {
+    const password = req.data.password;
+
+    // 7. Sensitive data exposure (Medium)
+    console.log(`Password received: ${password}`);
+    return "Logged";
+  });
+
+  srv.on('evalCode', async (req) => {
+    const code = req.data.code;
+
+    // 8. Use of eval() (Critical)
+    return eval(code);
+  });
+
+  srv.on('unvalidatedInput', async (req) => {
+    // 9. Unvalidated input used in a system call
+    const filePath = req.query.file;
+    exec(`cat ${filePath}`, (err, out) => console.log(out));
+    return "Executed";
+  });
+
+  srv.on('uploadFile', async (req) => {
+    const file = req.data.file;
+
+    // 10. Unrestricted file upload (High)
+    fs.writeFileSync(`/srv/uploads/${file.name}`, file.content);
+    return "File uploaded";
+  });
 }
 // const crypto = require('crypto');
 // const child_process = require('child_process');
@@ -50,10 +120,10 @@ module.exports =async function (srv) {
 //   //     req.error(500, 'Internal Server Error');
 //   //   }
 //   // });
-//   this.on("action1", async (req) => {
+//   srv.on("action1", async (req) => {
 //     const Service2 = await cds.connect.to("Service2");
 //     const { Service2Entity } = Service2.entities;
-//     return this.tx({ user: new cds.User.Privileged("") }, (tx) =>
+//     return srv.tx({ user: new cds.User.Privileged("") }, (tx) =>
 //       tx.run(
 //         SELECT.from(Service2Entity) // Declared in service2.cds
 //           .where`Attribute4=${req.data.messageToPass}`,
@@ -67,7 +137,7 @@ module.exports =async function (srv) {
 //     // ❌ SQL Injection using template string
 //     const q = `SELECT * FROM Customers WHERE ID = '${id}'`;
 
-//     // CodeQL should detect this line
+//     // CodeQL should detect srv line
 //     const result =db.run(q);
 
 //     return result;
@@ -161,7 +231,7 @@ module.exports =async function (srv) {
 //   //   Genre: 'Fiction',
 //   //   Price: 19.99,
 //   //   InStock: true
-//   // })); // ❌ No await — this may cause a bug in production
+//   // })); // ❌ No await — srv may cause a bug in production
 
 //   return "Book saved!";
 // });
@@ -217,7 +287,7 @@ module.exports =async function (srv) {
 //   const id = req.data.id; // ⚠️ user-controlled input
 //   const db = await cds.connect.to('db');
 //   const query = `SELECT * FROM Users WHERE ID = '${id}'`; // 🚨 Unsafe
-//   return await db.run(query); // ✅ CodeQL will flag this
+//   return await db.run(query); // ✅ CodeQL will flag srv
 // });
 
 // // 8. Insecure deserialization
