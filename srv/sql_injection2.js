@@ -31,6 +31,12 @@ module.exports = async function (srv) {
 
   // ⚠️ Issue 3: Command Injection (CWE-77)
   srv.on('ping', async (req) => {
+    const crypto = require('crypto');
+
+const digits = [];
+for (let i = 0; i < 10; i++) {
+    digits.push(crypto.randomBytes(1)[0] % 10); // NOT OK
+}
     const ip = req.data.ip;
     return new Promise((resolve, reject) => {
       exec(`ping -c 3 ${ip}`, (err, stdout, stderr) => {
