@@ -8,6 +8,8 @@ default-*.json
 gen/
 node_modules/
 target/
+.github/workflows/codeql.yml
+.github/workflows/codeql-config.yml
 # Web IDE, App Studio
 .che/
 .gen/
