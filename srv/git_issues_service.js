@@ -1,5 +1,6 @@
 const cds = require('@sap/cds');
-const app = require("express")()
+const app = require("express")();
+const { isValidUserId } = require("../utils/validation");
 module.exports =async function (srv) {
  const nodemailer = require("nodemailer");
  
@@ -27,13 +28,15 @@ srv.on("addComment", async (req) => {
 // 3. Cross-Site Request Forgery (CSRF) (CWE-352)
 srv.on("updateProfile", async (req) => {
   // no CSRF protection check
-  return cds.run(UPDATE("Profiles").set(req.data).where({ ID: req.user.id }));
+  const result=cds.run(UPDATE("Profiles").set(req.data).where({ ID: req.user.id }));
+  return result;
 });
 
 // 4. Authentication Bypass (CWE-287)
 srv.on("deleteUser", async (req) => {
   // no authentication enforced
-  return cds.run(DELETE.from("Users").where({ ID: req.data.id }));
+  const result=cds.run(DELETE.from("Users").where({ ID: req.data.id }));
+  return result;
 });
 
 // 5. Broken Access Control (CWE-284)
