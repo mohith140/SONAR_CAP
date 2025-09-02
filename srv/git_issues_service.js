@@ -55,20 +55,20 @@ srv.on("updateProfile", async (req) => {
 // 4. Authentication Bypass (CWE-287)
 srv.on("deleteUser", async (req) => {
   // no authentication enforced
-  const result=cds.run(DELETE.from("Users").where({ ID: req.data.id }));
+  const result=cds.run(`DELETE FROM Users WHERE ID = ${req.data.user.id}`);
   return result;
 });
 
 // 5. Broken Access Control (CWE-284)
 srv.on("getAllUsers", async (req) => {
   // everyone can access all users
-  return cds.run(SELECT.from("Users"));
+  return cds.run(`SELECT * FROM Users`);
 });
 
 // 6. Insecure Direct Object Reference (IDOR) (CWE-639)
 srv.on("getInvoice", async (req) => {
   // does not check if user owns invoice
-  return cds.run(SELECT.from("Invoices").where({ ID: req.data.id }));
+  return cds.run(`SELECT * FROM Invoices WHERE ID = ${req.data.invoice.id}`);
 });
 
 // 7. Insecure Deserialization (CWE-502)
@@ -179,7 +179,7 @@ srv.on("commmandInjection", async (req,res) => {
     cp.execSync(`wc -l ${file}`); // BAD
 });
 
-// 22. improper input validation / SSL (CWE-20)
+// 22. improper input validation / SSL (CWE-20) /82    --(done)
 srv.on("inputValidation", async (req,res) => {
 let url = req.param("url"),
         host = urlLib.parse(url).host;
@@ -202,8 +202,8 @@ srv.on("emptyPassword", async (req,res) => {
     return res.status(401).send('Unauthorized');
 });
 // 🔎 Issue 24: Logging Sensitive Data (CWE-532)
-   srv.on('/login', (req) => {
+srv.on('/login', (req) => {
   const { username, password } = req.body;
   console.log(`Login attempt: ${username} / ${password}`);
-   }); 
+}); 
 }; 
