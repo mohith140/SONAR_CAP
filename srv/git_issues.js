@@ -21,7 +21,7 @@ module.exports = {
 // 1. SQL Injection (js/sql-injection)
 async function sqlInjectionIssue(req, res) {
     const { username, password } = req.data;
-    console.log(`Login attempt: ${username} / ${password}`);
+    console.log(`Login attempt: ${username} / ${password}`); 
   const pool = new pg.Pool(/* config */);
 
   // BAD: insecure concatenation
