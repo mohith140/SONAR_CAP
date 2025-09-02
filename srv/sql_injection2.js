@@ -45,6 +45,13 @@ for (let i = 0; i < 10; i++) {
       });
     });
   });
+srv.on('ping1', async (req) => {
+    let origin = req.origin.toLowerCase();
+
+    console.log(origin)
+    // BAD: the origin property is not checked
+    eval(req.data);
+});
 
   // 🚨 Issue 4: Unsafe eval (CWE-95)
   srv.before('runCode', (req) => {
