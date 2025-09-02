@@ -8,6 +8,9 @@ module.exports =async function (srv) {
     "SELECT ITEM,PRICE FROM PRODUCT WHERE ITEM_CATEGORY='" +
     req.params.category +
     "' ORDER BY PRICE";
+    const result = await cds.run(query1);
+    console.log(result);
  })
+
 
 }; 
