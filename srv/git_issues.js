@@ -8,6 +8,9 @@ module.exports = async function (srv) {
 
   // === Example READ handler with multiple vulnerabilities ===
   srv.on('READ', 'VulnerableEntity', async (req) => {
+    let input = req.data.input || "";
+    if (/(?:start|end)(\[*|\{*)abc\2:(.*)/.test(input))
+	console.log("Found the pattern.");
     // === 1. Hardcoded Secret ===
     const GITHUB_TOKEN = "ghp_1234567890abcdef1234567890abcdef1234";
     console.log("Using token:", GITHUB_TOKEN);
