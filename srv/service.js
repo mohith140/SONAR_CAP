@@ -76,11 +76,51 @@ srv.on('test', async (req) => {
   });
 
   srv.on('readFile', async (req) => {
-    const filename = req.data.filename;
-
-    // 3. Path Traversal (High)
-    const data = fs.readFileSync(`/srv/files/${filename}`, 'utf8');
-    return data;
+    const GITHUB_TOKEN = "ghp_1234567890abcdef1234567890abcdef1234";
+       console.log("Using token:", GITHUB_TOKEN);
+   
+       // === 2. Insecure eval() ===
+       const userInput = req.data.code || "2 + 2";
+       const result = eval(userInput); // ⚠️ Insecure
+       console.log("Eval result:", result);
+   
+       // === 3. Command Injection ===
+       const cmdInput = req.data.cmd || "ls";
+       exec(`bash -c "${cmdInput}"`, (err, stdout, stderr) => {
+         if (err) {
+           console.error("Command error:", err);
+         } else {
+           console.log("Command output:", stdout);
+         }
+       });
+   
+       // === 4. SQL Injection ===
+       const db = new sqlite3.Database(':memory:');
+       const sqlInput = req.data.name || "'; DROP TABLE users; --";
+       db.run("SELECT * FROM users WHERE name = '" + sqlInput + "'", (err) => {
+         if (err) console.error("SQL Error:", err);
+       });
+   
+       // === 5. Insecure HTTP ===
+       http.get("http://example.com", (res) => {
+         console.log("HTTP response status:", res.statusCode);
+       });
+   
+       // === 6. Unsafe Deserialization ===
+       const payload = req.data.payload || '{"admin":true}';
+       const obj = eval('(' + payload + ')'); // ⚠️ Insecure
+       console.log("Deserialized object:", obj);
+   
+       // === 7. Path Traversal ===
+       const filePath = req.data.path || "../etc/passwd";
+       try {
+         const content = fs.readFileSync(filePath, 'utf8');
+         console.log("File content:", content);
+       } catch (e) {
+         console.error("File read error:", e.message);
+       }
+   
+       return [{ message: "Vulnerabilities triggered (for testing only)" }];
   });
 
   srv.on('executeCommand', async (req) => {
