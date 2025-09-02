@@ -1,9 +1,11 @@
 const cds = require('@sap/cds');
 const app = require("express")();
-const { isValidUserId } = require("./utils/validation");
+const fs = require('fs');
+var http = require("http");
+const url = require("url");
 module.exports =async function (srv) {
  const nodemailer = require("nodemailer");
- 
+ const password="1234"
   srv.on("updateEntry",async (req)=> { 
     const category=req.params.category;
    var query1 =
@@ -11,17 +13,33 @@ module.exports =async function (srv) {
     category +
     "' ORDER BY PRICE";
     const result = await cds.run(query1);
-    console.log(result);
+    console.log(result+" "+password);
  })
 
 
 // 2. Cross-Site Scripting (XSS) (CWE-79)
 srv.on('/user/:id', async (req,res) => {
-  if (!isValidUserId(req.params.id))
-    res.send("Unknown user: " + req.params.id);
-  else
-    res.send("known user: ");
-    // TODO: do something exciting
+const name = req.query.name; // user-controlled input
+    // ❌ Unsafe: reflected directly into response
+    res.send(`Hello, ${name}! Welcome to our site.`);
+        var href = document.location.href,
+        deflt = href.substring(href.indexOf("default=")+8);
+    
+    try {
+        var parsed = unknownParseFunction(deflt); 
+    } catch(e) {
+        document.write("Had an error: " + e + ".");
+    }
+    //
+     fs.readdir('/public', function (error, fileNames) {
+        var list = '<ul>';
+        fileNames.forEach(fileName => {
+            // BAD: `fileName` can contain HTML elements
+            list += '<li>' + fileName + '</li>';
+        });
+        list += '</ul>'
+        res.send(list);
+    });
     
 });
 
@@ -98,12 +116,22 @@ srv.on("openData", async (_, res) => {
 // 14. Unvalidated Redirects and Forwards (CWE-601)
 srv.on("redirectUser", async (req, res) => {
   const { url } = req.data;
+  window.location = /.*redirect=([^&]*).*/.exec(document.location.href)[1];
+  res.redirect(req.query["target"]);
   res.redirect(url); // unvalidated user-controlled redirect
 });
 
 // 15. API Rate Limiting Issues (CWE-770)
 srv.on("expensiveOp", async () => {
   // no throttling, can be abused with unlimited calls
+  	var size = parseInt(url.parse(req.url, true).query.size);
+
+	let dogs = new Array(size).fill("dog"); // BAD
+   	var size = parseInt(url.parse(req.url, true).query.size);
+
+	let buffer = Buffer.alloc(size); // BAD
+
+	// ... use the buffer
   return Array(1000000).fill("expensive");
 });
 
