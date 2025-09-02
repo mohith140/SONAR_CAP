@@ -4,6 +4,7 @@ const fs = require('fs');
 var http = require("http");
 const url = require("url");
 var cp = require("child_process");
+const axios = require('axios');
 module.exports =async function (srv) {
  const nodemailer = require("nodemailer");
  const password="1234"
@@ -99,7 +100,7 @@ srv.on("openAdmin", async () => {
 
 // 11. Broken Session Management (CWE-384)
 srv.on("reuseSession", async (req) => {
-  req._.session.id = "HARDCODED_SESSION"; // predictable / reused session
+  req._.session.id = "jjhjhjhjjhbhgvgfvjbhgvgvgvhvghvhbh "; // predictable / reused session
   return "Session reused";
 });
 
@@ -124,7 +125,7 @@ srv.on("redirectUser", async (req, res) => {
 });
 
 // 15. API Rate Limiting Issues (CWE-770)
-srv.on("expensiveOp", async () => {
+srv.on("expensiveOp", async (req,res) => {
   // no throttling, can be abused with unlimited calls
   	var size = parseInt(url.parse(req.url, true).query.size);
 
@@ -132,7 +133,7 @@ srv.on("expensiveOp", async () => {
    	var size = parseInt(url.parse(req.url, true).query.size);
 
 	let buffer = Buffer.alloc(size); // BAD
-
+console.log(dog+" "+buffer)
 	// ... use the buffer
   return Array(1000000).fill("expensive");
 });
@@ -160,7 +161,7 @@ srv.on("legacyLib", async () => {
 // 19. Improper Logging & Monitoring (CWE-778)
 srv.on("logError", async (req) => {
   try {
-    await cds.run(SELECT.from("NonExistent"));
+    await cds.run('SELECT * FROM USER');
   } catch (err) {
     console.log("Error: " + err); // logs full stack trace, no monitoring
   }
@@ -174,6 +175,7 @@ srv.on("callInsecureAPI", async (req,res) => {
 
 // 21. Command injection / SSL (CWE-78)
 srv.on("commmandInjection", async (req,res) => {
+  cp.execSync(`wc -l ${file}`);
     let file = url.parse(req.url, true).query.path;
 
     cp.execSync(`wc -l ${file}`); // BAD
@@ -193,7 +195,7 @@ srv.on("emptyPassword", async (req,res) => {
     const { username, password } = req.body;
 
     // ❌ No check for empty passwords or proper authentication
-    if (users[username]) {
+    if (username) {
         // ✅ User exists, but...
         // ❌ Missing proper password check
         return res.send(`Logged in as ${username}`);
@@ -204,6 +206,6 @@ srv.on("emptyPassword", async (req,res) => {
 // 🔎 Issue 24: Logging Sensitive Data (CWE-532)
 srv.on('/login', (req) => {
   const { username, password } = req.body;
-  console.log(`Login attempt: ${username} / ${password}`);
+  console.log(`Login attempt: ${password}`);
 }); 
 }; 
