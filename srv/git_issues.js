@@ -5,9 +5,9 @@ const fs = require('fs');
 const http = require('http');
 
 module.exports = async function (srv) {
-
   // === Example READ handler with multiple vulnerabilities ===
   srv.on('READ', 'VulnerableEntity', async (req) => {
+    
     let input = req.data.input || "";
     if (/(?:start|end)(\[*|\{*)abc\2:(.*)/.test(input))
 	console.log("Found the pattern.");
