@@ -3,7 +3,6 @@ const app = require("express")();
 const fs = require('fs');
 var http = require("http");
 const url = require("url");
-var cp = require("child_process");
 const axios = require('axios');
 module.exports =async function (srv) {
  const nodemailer = require("nodemailer");
