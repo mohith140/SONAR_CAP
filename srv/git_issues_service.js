@@ -1,6 +1,6 @@
 const cds = require('@sap/cds');
 const app = require("express")();
-const { isValidUserId } = require("../utils/validation");
+const { isValidUserId } = require("./utils/validation");
 module.exports =async function (srv) {
  const nodemailer = require("nodemailer");
  
