@@ -5,21 +5,12 @@ const SqlString = require('sqlstring');
 const lodash = require('lodash');
 const util = require('util');
 
-module.exports = {
-  sqlInjectionIssue,
-  ssrfIssue,
-  protoPolluteAssignIssue,
-  protoPolluteMergeIssue,
-  remotePropertyInjectionIssue,
-  loopBoundInjectionIssue,
-  unvalidatedDynamicCallIssue,
-  unsafeDynamicAccessIssue,
-  taintedFormatStringIssue,
-  codeInjectionIssue
-};
+
 
 // 1. SQL Injection (js/sql-injection)
 async function sqlInjectionIssue(req, res) {
+       x = 23;
+    let x;
     const { username, password } = req.data;
     console.log(`Login attempt: ${username} / ${password}`); 
   const pool = new pg.Pool(/* config */);
