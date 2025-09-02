@@ -1,25 +1,17 @@
 // security-issues.js
-const express = require('express');
-const pg = require('pg');
-const SqlString = require('sqlstring');
-const lodash = require('lodash');
-const util = require('util');
 
 
 
 // 1. SQL Injection (js/sql-injection)
 async function sqlInjectionIssue(req, res) {
+    const loc = null;
+if (dist < 10)
+    loc = "here";
+else
+    loc = "there";
        x = 23;
     let x;
-    const { username, password } = req.data;
-    console.log(`Login attempt: ${username} / ${password}`); 
-  const pool = new pg.Pool(/* config */);
-
-  // BAD: insecure concatenation
-  const query = "SELECT * FROM users WHERE name='" + req.query.name + "'";
-  await pool.query(query);
-
-  res.send('Done');
+ 
 }
 
 // 2. SSRF (Server-Side Request Forgery)
