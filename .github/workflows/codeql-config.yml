@@ -1,7 +1,6 @@
 name: "My CodeQL config"
 
 packs:
-  # Use these packs for JavaScript and TypeScript analysis
   javascript:
     - codeql/javascript-queries:codeql-suites/javascript-security-extended.qls
     #- advanced-security/javascript-sap-xsjs-queries:codeql-suites/javascript-security-extended.qls
