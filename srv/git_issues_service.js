@@ -18,11 +18,11 @@ module.exports =async function (srv) {
 // 2. Cross-Site Scripting (XSS) (CWE-79)
 srv.on('/user/:id', async (req,res) => {
   if (!isValidUserId(req.params.id))
-    // BAD: a request parameter is incorporated without validation into the response
     res.send("Unknown user: " + req.params.id);
   else
+    res.send("known user: ");
     // TODO: do something exciting
-    ;
+    
 });
 
 // 3. Cross-Site Request Forgery (CSRF) (CWE-352)
