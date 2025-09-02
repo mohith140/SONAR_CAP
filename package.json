@@ -8,7 +8,13 @@
   "dependencies": {
     "@sap/cds": "^8",
     "@sap/hana-client": "^2.25.22",
-    "express": "^4"
+    "express": "^4",
+    "nodemailer": "^6.7.8",
+    "passport": "^0.6.0",
+    "sap-cf-axios": "^1.0.2",
+    "sap-cf-mailer": "0.0.5",
+    "sap-cf-socks": "github:piejanssens/sap-cf-socks",
+    "socks": "^2.7.0"
   },
   "devDependencies": {
     "@cap-js/cds-types": "^0.10.0",
@@ -40,12 +46,16 @@
         "users": {
           "JohnDoe": {
             "password": "JohnDoesPassword",
-            "roles": ["JohnDoesRole"],
+            "roles": [
+              "JohnDoesRole"
+            ],
             "attr": {}
           },
           "JaneDoe": {
             "password": "JaneDoesPassword",
-            "roles": ["JaneDoesRole"],
+            "roles": [
+              "JaneDoesRole"
+            ],
             "attr": {}
           }
         }
@@ -54,8 +64,8 @@
         "auth": "dummy"
       },
       "[deploy]": {
-      "auth": "xsuaa"
-    },
+        "auth": "xsuaa"
+      },
       "db": {
         "kind": "hana"
       }

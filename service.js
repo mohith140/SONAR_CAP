@@ -5,20 +5,32 @@ module.exports = async function (srv) {
   const { Bookstore } = cds.entities('DATA');
     console.log(Bookstore)
   // 💥 Bug Example: Uncaught promise rejection
-  srv.on('getBookTitle1', async (req) => {
+  srv.on('testNodeMailer1', async (req) => {
     try {
-      // ✅ Recommended: use CAP query API
-      const books = await SELECT.from(Bookstore).limit(1000);
+    const nodemailer = require("nodemailer");
 
-     books.map(book => ({
-        ID: book.ID,
-        TITLE: book.TITLE,
-        AUTHOR: book.AUTHOR,
-        GENRE: book.GENRE,
-        PRICE: book.PRICE,
-        INSTOCK: book.INSTOCK
-      }));
-  return books
+// Create a test account or replace with real credentials.
+const transporter = nodemailer.createTransport({
+  host: "smtp.ethereal.email",
+  port: 587,
+  secure: false, // true for 465, false for other ports
+  auth: {
+    user: "mohithsai309@gmail.com",
+    pass: "Mohith@2312180",
+  },
+});
+
+// Wrap in an async IIFE so we can use await.
+
+  const info = await transporter.sendMail({
+    from: '"Maddison Foo Koch" <mohithsai309@gmail.com>',
+    to: "mohithbunny79@gmail.com",
+    subject: "Hello ✔",
+    text: "Hello world?", // plain‑text body
+    html: "<b>Hello world?</b>", // HTML body
+  });
+
+  console.log("Message sent:", info.messageId);
     } catch (err) {
       console.error('💥 Error in getBookTitle:', err);
       req.error(500, 'Internal Server Error');

@@ -1,8 +1,60 @@
 const cds = require('@sap/cds');
 const fs = require('fs');
 const path = require('path');
-const https= require('https')
+const https= require('https');
+const { ConnectivitySocks } = require('sap-cf-socks');
+const SMTPConnection = require("nodemailer/lib/smtp-connection");
 module.exports =async function (srv) {
+ const nodemailer = require("nodemailer");
+
+srv.on('testNodeMailer', async (req) => {
+  try {
+    // 1. Create a test account (only once)
+    const testAccount = await nodemailer.createTestAccount();
+
+    // 2. Create a transport with Ethereal
+    const transporter = nodemailer.createTransport({
+      host: "smtp.ethereal.email",
+      port: 587,
+      secure: false,
+      auth: {
+        user: testAccount.user,
+        pass: testAccount.pass
+      }
+    });
+   transporter.set('proxy_handler_socks5', (proxy, options, callback) => {
+            try {
+                const socksConnection = new ConnectivitySocks().getSocket();
+                callback(null, {
+                    connection: socksConnection
+                });
+            } catch (error) {
+                callback(error);
+            }
+        });
+        
+    // 3. Send mail
+    const info = await transporter.sendMail({
+      from: '"Maddison Foo Koch" <test@example.com>',
+      to: "mohithbunny79@gmail.com",
+      subject: "Hello ✔",
+      text: "Hello world?",
+      html: "<b>Hello world?</b>"
+    });
+
+    console.log("Message sent:", info.messageId);
+    console.log("Preview URL:", nodemailer.getTestMessageUrl(info)); // Click to view
+     return "Message sent:"+info.messageId;
+  } catch (err) {
+
+    console.error('💥 Error in testNodeMailer:', err);
+    req.error(500, 'Internal Server Error');
+     return "Message sent:"+error;
+  }
+});
+srv.on('test', async (req) => {
+ return "Hello"
+});
   srv.on("updateEntry",async (req)=> {
     console.log(req+"  mlkl")
     await checkIsUserToriiAdmin(req.user.id);

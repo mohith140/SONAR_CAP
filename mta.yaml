@@ -19,15 +19,20 @@ modules:
   type: hdb
   path: db
   requires:
-  - name: hdi_db
+  - name: sonar-db
 resources:
-- name: hdi_db
+- name: sonar-db
   type: com.sap.xs.hdi-container
   parameters:
     config:
       schema: SONARDEMO
   properties:
-    hdi-container-name: ${service-name}
+    hdi-container-name: sonar-db
+- name: scheduler  # <-- Define Job Scheduler resource
+  type: org.cloudfoundry.managed-service
+  parameters:
+    service: jobscheduler    # Service name
+    service-plan: lite 
 parameters:
   enable-parallel-deployments: true
 build-parameters:
