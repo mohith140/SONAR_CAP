@@ -4,9 +4,10 @@ module.exports =async function (srv) {
  const nodemailer = require("nodemailer");
  
   srv.on("updateEntry",async (req)=> { 
+    const category=req.params.category;
    var query1 =
-    "SELECT ITEM,PRICE FROM PRODUCT WHERE ITEM_CATEGORY='" +
-    req.params.category +
+    "SELECT ITEM,PRICE FROM SHOP WHERE ITEM_CATEGORY='" +
+    category +
     "' ORDER BY PRICE";
     const result = await cds.run(query1);
     console.log(result);
@@ -15,8 +16,12 @@ module.exports =async function (srv) {
 
 // 2. Cross-Site Scripting (XSS) (CWE-79)
 srv.on("addComment", async (req) => {
-  const { comment } = req.data;
-  return `<div>User comment: ${comment}</div>`; // directly rendered, no sanitization
+  if (!isValidUserId(req.params.id)) {
+    // Directly inserting untrusted user input into response (BAD ❌)
+    res.send("Unknown user: " + req.params.id);
+  } else {
+    res.send("Welcome back user " + req.params.id);
+  }
 });
 
 // 3. Cross-Site Request Forgery (CSRF) (CWE-352)
