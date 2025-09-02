@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testExecutions version="1">
+  <file path="/home/user/projects/sonarcap/test/service.test.js">
+    <testCase name="CAP Custom Handlers getBookTitle1: should return mocked books" duration="60">
+      <failure message="ReferenceError: content is not defined"><![CDATA[ReferenceError: content is not defined
+    at Object.content (/home/user/projects/sonarcap/test/service.test.js:34:17)
+    at processTicksAndRejections (node:internal/process/task_queues:105:5)]]></failure>
+    </testCase>
+    <testCase name="CAP Custom Handlers getBookTitle: should return SQL query result" duration="1">
+      <failure message="TypeError: Cannot read properties of null (reading &apos;doSomething&apos;)"><![CDATA[TypeError: Cannot read properties of null (reading 'doSomething')
+    at doSomething (/home/user/projects/sonarcap/srv/service.js:39:13)
+    at processTicksAndRejections (node:internal/process/task_queues:105:5)
+    at Object.<anonymous> (/home/user/projects/sonarcap/test/service.test.js:51:20)]]></failure>
+    </testCase>
+    <testCase name="CAP Custom Handlers getBookByTitleSqlInjection: should return result" duration="2"/>
+    <testCase name="CAP Custom Handlers createUser: should return result" duration="1">
+      <failure message="ReferenceError: mockResult is not defined"><![CDATA[ReferenceError: mockResult is not defined
+    at Object.mockResult (/home/user/projects/sonarcap/test/service.test.js:70:28)
+    at processTicksAndRejections (node:internal/process/task_queues:105:5)]]></failure>
+    </testCase>
+    <testCase name="CAP Custom Handlers saveBook: should return result" duration="1"/>
+    <testCase name="CAP Custom Handlers readFileInsecure: should return file content" duration="8"/>
+  </file>
+</testExecutions>

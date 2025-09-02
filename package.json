@@ -1,0 +1,76 @@
+{
+  "name": "sonarcap",
+  "version": "1.0.0",
+  "description": "A simple CAP project.",
+  "repository": "<Add your repository here>",
+  "license": "UNLICENSED",
+  "private": true,
+  "dependencies": {
+    "@sap/cds": "^8",
+    "@sap/hana-client": "^2.25.22",
+    "express": "^4",
+    "nodemailer": "^6.7.8",
+    "passport": "^0.6.0",
+    "sap-cf-axios": "^1.0.2",
+    "sap-cf-mailer": "0.0.5",
+    "express": "^4.18.2",
+    "pg": "^8.11.1",
+    "sap-cf-socks": "github:piejanssens/sap-cf-socks",
+    "socks": "^2.7.0"
+  },
+  "devDependencies": {
+    "@cap-js/cds-types": "^0.10.0",
+    "@cap-js/sqlite": "^1",
+    "@sap/cds-dk": "^8",
+    "eslint": "^9.30.1",
+    "jest": "^30.0.3",
+    "jest-sonar-reporter": "^2.0.0",
+    "mock-fs": "^5.5.0",
+    "sonar-scanner": "^3.1.0",
+    "supertest": "^7.1.1"
+  },
+  "scripts": {
+    "build": "cds build --clean",
+    "start": "cds-serve",
+    "test": "jest --coverage",
+    "lint": "eslint . --ext .js,.ts"
+  },
+  "cds": {
+    "build": {
+      "target": "."
+    },
+    "hana": {
+      "deploy-format": "hdbtable"
+    },
+    "requires": {
+      "auth": {
+        "kind": "basic",
+        "users": {
+          "JohnDoe": {
+            "password": "JohnDoesPassword",
+            "roles": [
+              "JohnDoesRole"
+            ],
+            "attr": {}
+          },
+          "JaneDoe": {
+            "password": "JaneDoesPassword",
+            "roles": [
+              "JaneDoesRole"
+            ],
+            "attr": {}
+          }
+        }
+      },
+      "[dev]": {
+        "auth": "dummy"
+      },
+      "[deploy]": {
+        "auth": "xsuaa"
+      },
+      "db": {
+        "kind": "hana"
+      }
+    }
+  }
+}

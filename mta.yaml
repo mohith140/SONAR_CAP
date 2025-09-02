@@ -1,0 +1,43 @@
+_schema-version: 3.3.0
+ID: sonarcap
+description: A simple CAP project.
+version: 1.0.0
+modules:
+- name: sonarcap-srv
+  type: nodejs
+  path: .
+  provides:
+  - name: srv-api
+    properties:
+      srv-url: ${default-url}
+  parameters:
+    buildpack: nodejs_buildpack
+    instances: 1
+  build-parameters:
+    builder: npm-ci
+- name: db
+  type: hdb
+  path: db
+  requires:
+  - name: sonar-db
+resources:
+- name: sonar-db
+  type: com.sap.xs.hdi-container
+  parameters:
+    config:
+      schema: SONARDEMO
+  properties:
+    hdi-container-name: sonar-db
+- name: scheduler  # <-- Define Job Scheduler resource
+  type: org.cloudfoundry.managed-service
+  parameters:
+    service: jobscheduler    # Service name
+    service-plan: lite 
+parameters:
+  enable-parallel-deployments: true
+build-parameters:
+  before-all:
+  - builder: custom
+    commands:
+    - npm ci
+    - npx cds build --production

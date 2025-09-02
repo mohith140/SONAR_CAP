@@ -1,0 +1,42 @@
+# name: SonarCloud
+
+# on:
+#   push:
+#     branches:
+#       - main
+#   pull_request:
+#     types: [opened, synchronize, reopened]
+
+# jobs:
+#   build:
+#     name: SonarCloud
+#     runs-on: ubuntu-latest
+
+#     steps:
+#       - uses: actions/checkout@v3
+#         with:
+#           fetch-depth: 0  # Needed for SonarCloud analysis
+
+#       - name: Set up Node.js
+#         uses: actions/setup-node@v4
+#         with:
+#           node-version: 18
+
+#       - name: Install dependencies
+#         run: npm install
+     
+
+#       - name: SonarCloud Scan
+#         continue-on-error: false
+#         uses: SonarSource/sonarcloud-github-action@v2
+#         with:
+#           args: >
+#             -Dsonar.organization=mohith140
+#             -Dsonar.projectKey=mohith140_SONAR_CAP
+#         env:
+#           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
+
+#       - name: Wait for Quality Gate result
+#         uses: sonarsource/sonarqube-quality-gate-action@master
+#         env:
+#           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
