@@ -5,7 +5,7 @@
 // 1. SQL Injection (js/sql-injection)
 async function sqlInjectionIssue(req, res) {
     const loc = null;
-if (dist < 10)
+if (dist < 10) 
     loc = "here";
 else
     loc = "there";
