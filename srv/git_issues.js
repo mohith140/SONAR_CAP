@@ -1,75 +1,59 @@
-// security-issues.js
+const cds = require('@sap/cds');
+const { exec } = require('child_process');
+const sqlite3 = require('sqlite3').verbose();
+const fs = require('fs');
+const http = require('http');
 
+module.exports = async function (srv) {
 
+  // === Example READ handler with multiple vulnerabilities ===
+  srv.on('READ', 'VulnerableEntity', async (req) => {
+    // === 1. Hardcoded Secret ===
+    const GITHUB_TOKEN = "ghp_1234567890abcdef1234567890abcdef1234";
+    console.log("Using token:", GITHUB_TOKEN);
 
-// 1. SQL Injection (js/sql-injection)
-async function sqlInjectionIssue(req, res) {
-    const loc = null;
-if (dist < 10) 
-    loc = "here";
-else
-    loc = "there";
-       x = 23;
-    let x;
- 
-}
+    // === 2. Insecure eval() ===
+    const userInput = req.data.code || "2 + 2";
+    const result = eval(userInput); // ⚠️ Insecure
+    console.log("Eval result:", result);
 
-// 2. SSRF (Server-Side Request Forgery)
-function ssrfIssue(req, res) {
-  const target = req.query.target;
-  require('http').get(target, (response) => response.pipe(res));
-}
+    // === 3. Command Injection ===
+    const cmdInput = req.data.cmd || "ls";
+    exec(`bash -c "${cmdInput}"`, (err, stdout, stderr) => {
+      if (err) {
+        console.error("Command error:", err);
+      } else {
+        console.log("Command output:", stdout);
+      }
+    });
 
-// 3. Prototype-polluting assignment
-function protoPolluteAssignIssue(req) {
-  const obj = {};
-  obj[req.params.key] = req.body.value;
-  return obj;
-}
+    // === 4. SQL Injection ===
+    const db = new sqlite3.Database(':memory:');
+    const sqlInput = req.data.name || "'; DROP TABLE users; --";
+    db.run("SELECT * FROM users WHERE name = '" + sqlInput + "'", (err) => {
+      if (err) console.error("SQL Error:", err);
+    });
 
-// 4. Prototype-polluting merge
-function protoPolluteMergeIssue(req) {
-  const prefs = JSON.parse(req.body.prefs);
-  const merged = lodash.merge({}, prefs);
-  return merged;
-}
+    // === 5. Insecure HTTP ===
+    http.get("http://example.com", (res) => {
+      console.log("HTTP response status:", res.statusCode);
+    });
 
-// 5. Remote property injection
-function remotePropertyInjectionIssue(req) {
-  const myObj = {};
-  myObj[req.query.name] = () => {};
-  return myObj;
-}
+    // === 6. Unsafe Deserialization ===
+    const payload = req.data.payload || '{"admin":true}';
+    const obj = eval('(' + payload + ')'); // ⚠️ Insecure
+    console.log("Deserialized object:", obj);
 
-// 6. Loop-bound injection (DoS)
-function loopBoundInjectionIssue(req) {
-  const arr = req.body.array;
-  for (let i = 0; i < arr.length; i++) {
-    // intensive logic here
-  }
-}
+    // === 7. Path Traversal ===
+    const filePath = req.data.path || "../etc/passwd";
+    try {
+      const content = fs.readFileSync(filePath, 'utf8');
+      console.log("File content:", content);
+    } catch (e) {
+      console.error("File read error:", e.message);
+    }
 
-// 7. Unvalidated dynamic method call
-function unvalidatedDynamicCallIssue(req, res) {
-  const actions = {play: () => 'ok', stop: () => 'stopped'};
-  const fn = actions[req.params.act];
-  res.send(fn());
-}
+    return [{ message: "Vulnerabilities triggered (for testing only)" }];
+  });
 
-// 8. Unsafe dynamic method access
-function unsafeDynamicAccessIssue(req, res) {
-  global[req.query.name]('data');
-  res.send('executed');
-}
-
-// 9. Tainted format string
-function taintedFormatStringIssue(req) {
-  console.log(util.format(req.query.fmt, req.query.value));
-}
-
-// 10. Code Injection
-function codeInjectionIssue(req, res) {
-  const code = req.query.code;
-  eval(code);
-  res.send('executed code');
-}
+});
