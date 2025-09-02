@@ -7,7 +7,9 @@ var cp = require("child_process");
 const axios = require('axios');
 module.exports =async function (srv) {
  const nodemailer = require("nodemailer");
- const password="1234"
+ let url = 'http://example.org/auth';
+let username = 'user';
+let password = 'passwd';
  //1.sql injection            ---(done)
   srv.on("updateEntry",async (req)=> { 
     const category=req.params.category;
