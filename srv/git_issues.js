@@ -56,4 +56,4 @@ module.exports = async function (srv) {
     return [{ message: "Vulnerabilities triggered (for testing only)" }];
   });
 
-});
+};
