@@ -3,7 +3,7 @@ const app = require("express")();
 const fs = require('fs');
 var http = require("http");
 const url = require("url");
-var cp = require("child_process"),
+var cp = require("child_process");
 module.exports =async function (srv) {
  const nodemailer = require("nodemailer");
  const password="1234"
@@ -188,7 +188,7 @@ let url = req.param("url"),
         res.redirect(url);
     }
 });
-//empty password configuration  cwe:862
+//23. empty password configuration  cwe:862
 srv.on("emptyPassword", async (req,res) => {
     const { username, password } = req.body;
 
@@ -201,6 +201,9 @@ srv.on("emptyPassword", async (req,res) => {
 
     return res.status(401).send('Unauthorized');
 });
-
-    
+// 🔎 Issue 24: Logging Sensitive Data (CWE-532)
+   srv.on('/login', (req) => {
+  const { username, password } = req.body;
+  console.log(`Login attempt: ${username} / ${password}`);
+   }); 
 }; 
