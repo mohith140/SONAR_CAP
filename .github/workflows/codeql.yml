@@ -31,14 +31,8 @@ jobs:
 
     - name: Compile CDS files
       run: |
-        npm install -g @sap/cds-dk
-        for cds_file in $(find . -type f \( -iname '*.cds' \) -print)
-        do
-          cds compile $cds_file \
-            -2 json \
-            -o "$cds_file.json" \
-            --locations
-        done
+        mkdir -p gen
+        cds compile . --to json --out gen/cap-model.json --locations
 
     - name: Initialize CodeQL
       uses: github/codeql-action/init@v3
@@ -52,7 +46,7 @@ jobs:
       uses: github/codeql-action/analyze@v3
       env:
         LGTM_INDEX_XML_MODE: all
-        LGTM_INDEX_FILETYPES: ".json:JSON\n.cds:JSON"
+        LGTM_INDEX_FILETYPES: ".json:JSON"
 
 # old 2
 # name: "CodeQL for CAP"

@@ -4,6 +4,8 @@ const fs = require('fs');
 var http = require("http");
 const url = require("url");
 const axios = require('axios');
+const crypto = require("crypto");
+app.use(require('body-parser').urlencoded({ extended: false }))
 module.exports =async function (srv) {
  const nodemailer = require("nodemailer");
  let url = 'http://example.org/auth';
@@ -204,6 +206,33 @@ srv.on("emptyPassword", async (req,res) => {
 
     return res.status(401).send('Unauthorized');
 });
+
+  srv.on('logPassword', async (req) => {
+    const password = req.data.password;
+
+    // 7. Sensitive data exposure (Medium)
+    console.log(`Password received: ${password}`);
+    return "Logged";
+  });
+    srv.on('logPassword', async (req) => {
+    var hasher = crypto.createHash('md5');
+    var hashed = hasher.update(password).digest("hex"); // BAD
+    return hashed;
+  });
+    srv.on('queryParameters', async (req) => {
+        const user = req.query.user;
+    const password = req.query.password;
+    if (checkUser(user, password)) {
+        res.send('Welcome');
+    } else {
+        res.send('Access denied');
+    }
+  });
+    srv.on('hashSecure', async (req) => {
+    var hasher = crypto.createHash('md5');
+    var hashed = hasher.update(password).digest("hex"); // BAD
+    return hashed;
+  });
 // 🔎 Issue 24: Logging Sensitive Data (CWE-532)
 srv.on('/login', (req) => {
 let url = 'http://example.org/auth';
