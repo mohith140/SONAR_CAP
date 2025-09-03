@@ -32,7 +32,7 @@
   },
    "config": {
     "db_user": "admin",
-    "db_password": "SuperSecret123"   // ❌ Hardcoded secret
+    "db_password": "SuperSecret123"
   },
   "scripts": {
     "build": "cds build --clean",

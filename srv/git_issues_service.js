@@ -206,7 +206,21 @@ srv.on("emptyPassword", async (req,res) => {
 });
 // 🔎 Issue 24: Logging Sensitive Data (CWE-532)
 srv.on('/login', (req) => {
-  const { username, password } = req.body;
-  console.log(`Login attempt: ${password}`);
+let url = 'http://example.org/auth';
+let username = 'user';
+let password = 'passwd';
+let admin_password="";
+let headers = new Headers();
+
+headers.append('Content-Type', 'text/json');
+headers.append('Authorization', 'Basic' + username + ":" + password+" "+admin_password);
+
+fetch(url, {
+          method:'GET',
+          headers: headers
+       })
+.then(response => response.json())
+.then(json => console.log(json))
+.done();
 }); 
 }; 
