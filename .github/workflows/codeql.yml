@@ -31,8 +31,12 @@ jobs:
 
     - name: Compile CDS files
       run: |
-        npx cds compile srv --to json -o gen/cap-cds-model.json
-
+        npx cds compile . --to json -o gen/cap-cds-model.json
+    - name: Upload CDS model
+      uses: actions/upload-artifact@v3
+      with:
+        name: cap-cds-model
+        path: gen/cap-cds-model.json
     - name: Initialize CodeQL
       uses: github/codeql-action/init@v3
       with:
