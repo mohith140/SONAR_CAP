@@ -31,8 +31,6 @@ jobs:
 
     - name: Compile CDS files
       run: |
-       npm install -g @sap/cds-dk
-       mkdir -p gen
        npx cds compile srv --to json -o gen/cap-cds-model.json
        npx cds compile db --to json -o gen/cap-cds-model.json
     - name: Upload CDS model
