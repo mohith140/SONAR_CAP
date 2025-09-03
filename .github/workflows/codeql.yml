@@ -33,7 +33,7 @@ jobs:
       run: |
         npx cds compile . --to json -o gen/cap-cds-model.json
     - name: Upload CDS model
-      uses: actions/upload-artifact@v3
+      uses: actions/upload-artifact@v4
       with:
         name: cap-cds-model
         path: gen/cap-cds-model.json
