@@ -43,7 +43,7 @@ jobs:
       uses: actions/upload-artifact@v4
       with:
         name: cap-cds-model
-        path: gen/cap-cds-model.json
+        path: srv/cap-cds-model.json
     - name: Initialize CodeQL
       uses: github/codeql-action/init@v3
       with:
