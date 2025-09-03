@@ -9,6 +9,10 @@ using DATA1 from '../db/orders';
 //   // }
 // }
 service MainService {
+   entity Users               as projection on DATA.Users;
+   entity AdminSettings               as projection on DATA.AdminSettings;
+   entity AuditLogs               as projection on DATA.AuditLogs;
+ 
   entity Orders               as projection on DATA1.Orders;
  
   entity Employees as projection on DATA1.Employees;
