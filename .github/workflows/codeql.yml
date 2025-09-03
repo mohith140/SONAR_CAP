@@ -31,7 +31,7 @@ jobs:
 
     - name: Compile CDS files
       run: |
-        npx cds compile . --to json -o gen/cap-cds-model.json
+        npx cds compile srv,db --to json -o gen/cap-cds-model.json
     - name: Upload CDS model
       uses: actions/upload-artifact@v4
       with:
