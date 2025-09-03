@@ -31,7 +31,14 @@ jobs:
 
     - name: Compile CDS files
       run: |
-       npx cds compile db --to json -o gen/cap-cds-model.json
+        npm install -g @sap/cds-dk
+        for cds_file in $(find . -type f \( -iname '*.cds' \) -print)
+        do
+          cds compile $cds_file \
+            -2 json \
+            -o "$cds_file.json" \
+            --locations
+        done
     - name: Upload CDS model
       uses: actions/upload-artifact@v4
       with:
