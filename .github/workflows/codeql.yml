@@ -33,8 +33,8 @@ jobs:
       run: |
        npm install -g @sap/cds-dk
        mkdir -p gen
-       npx cds compile srv --to json -o gen/cap-cds-model.json --locations
-       npx cds compile db --to json -o gen/cap-cds-model.json --locations
+       npx cds compile srv --to json -o gen/cap-cds-model.json
+       npx cds compile db --to json -o gen/cap-cds-model.json
     - name: Upload CDS model
       uses: actions/upload-artifact@v4
       with:
@@ -53,6 +53,62 @@ jobs:
       env:
         LGTM_INDEX_XML_MODE: all
         LGTM_INDEX_FILETYPES: ".json:JSON\n.cds:JSON"
+#old 3
+# name: "CodeQL for CAP"
+
+# on:
+#   push:
+#     branches: [ main ] 
+#   pull_request:
+#     branches: [ main ]
+#   schedule:
+#     - cron: '0 0 * * 0'
+# jobs:
+#   analyze-javascript:
+#     name: Analyze
+#     runs-on: ubuntu-latest
+#     permissions:
+#       security-events: write
+
+#     steps:  # <- You were missing this line
+#     - name: Checkout repository
+#       uses: actions/checkout@v4
+
+#     - name: Set up Node.js
+#       uses: actions/setup-node@v4
+#       with:
+#         node-version: 22
+
+#     - name: Install CAP CLI
+#       run: npm install -g @sap/cds
+
+#     - name: Install dependencies
+#       run: npm ci
+
+#     - name: Compile CDS files
+#       run: |
+#         npm install -g @sap/cds-dk
+#         for cds_file in $(find . -type f \( -iname '*.cds' \) -print)
+#         do
+#           cds compile $cds_file \
+#             -2 json \
+#             -o "$cds_file.json" \
+#             --locations
+#         done
+
+#     - name: Initialize CodeQL
+#       uses: github/codeql-action/init@v3
+#       with:
+#         config-file: .github/workflows/codeql-config.yml
+#         languages: javascript
+         
+
+#     - name: Perform CodeQL Analysis
+#       id: analyze
+#       uses: github/codeql-action/analyze@v3
+#       env:
+#         LGTM_INDEX_XML_MODE: all
+#         LGTM_INDEX_FILETYPES: ".json:JSON\n.cds:JSON"
 
 # old 2
 # name: "CodeQL for CAP"
