@@ -31,19 +31,13 @@ jobs:
 
     - name: Compile CDS files
       run: |
-        npm install -g @sap/cds-dk
-        for cds_file in $(find . -type f \( -iname '*.cds' \) -print)
-        do
-          cds compile $cds_file \
-            -2 json \
-            -o "$cds_file.json" \
-            --locations
-        done
+        npx cds compile srv --to json -o gen/cap-cds-model.json
+        npx cds compile db --to json -o gen/cap-cds-model.json
     - name: Upload CDS model
       uses: actions/upload-artifact@v4
       with:
         name: cap-cds-model
-        path: srv/cap-cds-model.json
+        path: gen/cap-cds-model.json
     - name: Initialize CodeQL
       uses: github/codeql-action/init@v3
       with:
